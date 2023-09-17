@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+        <title>Array and loops</title>
+    </head>
+    <style>
+        body {
+            background-color: aliceblue;
+            font-family: Arial;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .css-inputs {
+            display: grid;
+            grid-template-columns: 160px 80px 40px 60px;
+            gap: 5px;
+            margin-bottom: 10px;
+            height: 30px;
+        }
+        .css-task-input,
+        .css-date-input {
+            font-size: small;
+        }
+        .css-task-add {
+            display: grid;
+            grid-template-columns: 160px 80px 105px;
+            gap: 5px;
+            font-size: 15px;
+        }
+        .css-delet-btn,
+        .css-clear-all-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            height: 30px;
+            border-radius: 4px;
+            font-size: small;
+        }
+        .css-add-btn {
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: small;
+        }
+    </style>
+   
+    <body>
+        <p><b>Add your works shedule:</b></p>
+        <div class="css-inputs">
+            <input onkeydown="enter(event)" class="js-task-input css-task-input" placeholder="task">
+            <input type="date" class="js-date-input css-date-input">
+            <button onclick="addTask()" class="css-add-btn">Add</button>
+            <button onclick="clearAll()" class="css-clear-all-btn">Clear all</button>
+        </div>
+        
+        <div class="js-div css-task-add"></div>
+    </body>
+
+    <script>
+        const list = [];
+
+        renderTask();
+
+        function renderTask(){
+            let listHtml = '';
+
+            for (let i = 0; i < list.length; i++) {
+                const taskObject = list[i];
+                // name = taskObject.name; 
+                const {name, doDate} = taskObject;
+                const taskInPara = `
+                    <div> ${i+1}. ${name}</div>
+                    <div>${doDate}</div>
+                    <button class="css-delet-btn"
+                        onclick="list.splice(${i}, 1);
+                            renderTask();">
+                    Delete</button>
+                `;
+                listHtml += taskInPara;
+            }
+            document.querySelector('.js-div').innerHTML = listHtml;
+        }
+        
+        function addTask() {
+            const taskInputElement = document.querySelector('.js-task-input');
+            const name = taskInputElement.value;
+
+            const dateInputElement = document.querySelector('.js-date-input');
+            const doDate = dateInputElement.value;
+
+            if (name === '' || doDate === '') {
+
+            } else {
+                list.push({
+                    //name: name,
+                    //dodate: Dodate
+                    name,
+                    doDate
+                });
+                taskInputElement.value = '';
+            }
+            renderTask();
+        }
+
+        function clearAll() {
+            list.splice(0, list.length);
+            renderTask();
+        }
+
+        function enter(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        }
+
+
+
+
+
+
+        /*const list = [{
+            name: 'try',
+            doDate: '04-09-2023'
+        }, {
+            name: 'try',
+            doDate: '04-09-2023'
+        }];*/
+
+
+        /*const tasks = [];
+        function addTask() {
+            const inputElement = document.querySelector('.input_task');
+            const task_name = inputElement.value;
+
+            tasks.push(task_name);
+            console.log(tasks);
+
+            inputElement.value = '';
+        }
+        let l = 1;
+        while (l <= 5) {
+            console.log(l);
+            l++;
+        }
+        let x = 0;
+        while (x < 0.5) {
+            x = Math.random();
+            console.log(x);
+        }
+
+        for (let a = 0; a <= 5; a++) {
+            console.log(a);
+        }*/
+        /*const tasks = [];
+        function addTask() {
+            const inputElement = document.querySelector('.input_task');
+            const task_name = inputElement.value;
+
+            if (task_name === '') {
+
+            } else {
+                tasks.push(task_name);
+                document.querySelector('.try').innerHTML += `<p class="pa">${task_name}<p>`;
+                console.log(tasks);
+            }
+            inputElement.value = '';
+        }
+
+
+        const list = [
+            'psm',
+            'pogo',
+            'ketr'
+        ];
+
+        for (let x = 0; x < list.length; x++) {
+            const value = list[x];
+            console.log(value);
+        }
+
+        function tryf(){
+            document.querySelector('.try').innerHTML += '<p class="pa">abc<p>';
+        }*/
+    </script>
+</html>
